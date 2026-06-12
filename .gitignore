@@ -1,0 +1,26 @@
+# Go
+  *.exe
+  *.exe~
+  *.dll
+  *.so
+  *.dylib
+  *.test
+  *.out
+  /tmp/reel-api*
+  /downloads/
+
+  # Next.js
+  frontend/node_modules/
+  frontend/.next/
+  frontend/out/
+  frontend/.env*.local
+
+  # Misc
+  .DS_Store
+  *.mp4
+  *.jpg
+  *.jpeg
+  *.png
+  !frontend/public/*.svg
+  !frontend/public/*.ico
+  
