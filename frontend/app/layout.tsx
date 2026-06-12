@@ -15,9 +15,12 @@ import type { Metadata } from "next";
 
   export const metadata: Metadata = {
     title: "REELCINE — Cinematic 3D Instagram Downloader",
-    description: "Real-time Instagram video & image downloader with live 3D progress. Powered by pure Go backend with SSE.",
+    description: "Real-time Instagram video & image downloader with live 3D progress. Powered by serverless edge functions with SSE.",
     keywords: ["instagram downloader", "reel downloader", "instagram video", "instagram reels", "save instagram"],
-    icons: { icon: "/favicon.ico" },
+    icons: {
+      icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+      apple: "/favicon.svg",
+    },
   };
 
   export default function RootLayout({
