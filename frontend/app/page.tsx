@@ -204,6 +204,7 @@
                 <a href="#home" className="hover:text-amber-400 transition-colors">Home</a>
                 <a href="#features" className="hover:text-amber-400 transition-colors">Features</a>
                 <a href="#api" className="hover:text-amber-400 transition-colors">API</a>
+                <a href="https://github.com/Krainium/reelcine" target="_blank" rel="noopener noreferrer" className="hover:text-amber-400 transition-colors flex items-center gap-1">Source <span className="text-[10px] opacity-50">↗</span></a>
               </div>
             </div>
           </nav>
