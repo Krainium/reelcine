@@ -2,9 +2,9 @@
 
   **Web view: [https://reelcine.vercel.app](https://reelcine.vercel.app)**
 
-  paste an Instagram link, watch a 3D film reel spin while it extracts, save your file.
+  paste any Instagram video or image link, view  the 3D film reel spin while it extracts, save your file.
 
-  works for reels, posts, and IGTV. extraction runs on Vercel edge — no VPS, no external dependencies.
+  works for reels, posts, and IGTV. extraction runs on Vercel edge — no external dependencies needed.
 
   ---
 
@@ -90,8 +90,4 @@
   ```
 
   no environment variables needed — extraction runs entirely on the edge.
-
-  ---
-
-  MIT license. personal use.
   
