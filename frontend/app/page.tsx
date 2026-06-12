@@ -339,7 +339,7 @@
                   { icon: '🖼', title: 'Thumbnail preview', desc: 'Post thumbnail shown behind the 3D scene.' },
                   { icon: '💾', title: 'Caption filenames', desc: 'Files saved as caption_shortcode.mp4, not hashes.' },
                   { icon: '📂', title: 'Archive', desc: 'Last 10 captures stored locally, re-download anytime.' },
-                  { icon: '⚡', title: 'Serverless', desc: 'Fully hosted on Vercel — no VPS required.' },
+                  { icon: '⚡', title: 'Serverless', desc: 'Fully hosted on Vercel — no External servers required.' },
                 ].map(f => (
                   <div key={f.title} className="glass rounded-2xl p-6 border border-white/5">
                     <div className="text-2xl mb-3">{f.icon}</div>
