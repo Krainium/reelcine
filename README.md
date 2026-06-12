@@ -51,7 +51,7 @@
   - 🖼 **thumbnail preview** — shows the post thumbnail behind the 3D scene
   - 💾 **caption-based filenames** — saves as `caption_shortcode.mp4`, not a random hash
   - 📂 **archive** — last 10 captures stored in localStorage, re-download anytime
-  - ⚡ **serverless** — fully on Vercel edge, no VPS needed
+  - ⚡ **serverless** — fully on Vercel edge
   - 🌐 **proxy endpoints** — thumbnail and file download go through edge functions, no CORS issues
 
   ---
