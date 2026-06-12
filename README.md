@@ -1,8 +1,10 @@
 # 📽 ReelCine
 
-  paste an Instagram link, watch a 3D film reel spin while it downloads, save your file.
+  **Web view: [https://reelcine.vercel.app](https://reelcine.vercel.app)**
 
-  works for reels, posts, and IGTV. no yt-dlp, no ffmpeg, nothing external — just a single Go binary.
+  paste an Instagram link, watch a 3D film reel spin while it extracts, save your file.
+
+  works for reels, posts, and IGTV. extraction runs on Vercel edge — no VPS, no external dependencies.
 
   ---
 
@@ -10,41 +12,47 @@
 
   ```bash
   git clone https://github.com/Krainium/reelcine
-  cd reelcine
-  go build -o reelcine ./main.go
-  cd frontend && npm install && npm run build && cd ..
-  ./reelcine
+  cd reelcine/frontend
+  npm install
+  npm run dev
   ```
 
-  open **http://localhost:7777**
+  open **http://localhost:3000**
 
   ---
 
-  ## CLI mode
+  ## demo
 
-  drop a link straight in:
+  paste this link and hit CAPTURE:
 
   ```
-  $ ./reelcine https://www.instagram.com/reel/DYxWZWBSo6y/
-  CINER pure downloader
-  shortcode: DYxWZWBSo6y
-  downloading to downloads/Claude_is_getting_crazyyy_DYxWZWBSo6y.mp4
-  [====================================] 100.0%
-  Saved: downloads/Claude_is_getting_crazyyy_DYxWZWBSo6y.mp4
+  https://www.instagram.com/reels/DZafF3uNUFY/
   ```
 
-  files land in `./downloads/` — named after the caption, not some random hash.
+  the 3D film reel starts spinning immediately. progress comes in through an SSE stream.
+  when it hits 100% the SAVE FILE button appears — one click downloads the video.
+
+  terminal output during a capture:
+
+  ```
+  resolving  →  5%
+  fetching   →  18%
+  querying   →  38%
+  extracting →  65%
+  done       →  100%  →  filename.mp4 ready
+  ```
 
   ---
 
   ## what it does
 
-  - 🎞 **3D capture room** — Three.js film reel spins, reacts to download % in realtime
-  - 📡 **live SSE progress** — true server push, not polling, 160ms updates
+  - 🎞 **3D capture room** — Three.js film reel spins, reacts to progress in realtime
+  - 📡 **live SSE** — true server push via EventSource, not polling
   - 🖼 **thumbnail preview** — shows the post thumbnail behind the 3D scene
-  - 💾 **caption-based filenames** — saves as `Claude_is_getting_crazyyy_DYxWZWBSo6y.mp4`
-  - 📂 **archive** — last 10 downloads remembered in localStorage, re-download anytime
-  - ⚡ **one binary, one port** — Go serves the UI and API together on :7777
+  - 💾 **caption-based filenames** — saves as `caption_shortcode.mp4`, not a random hash
+  - 📂 **archive** — last 10 captures stored in localStorage, re-download anytime
+  - ⚡ **serverless** — fully on Vercel edge, no VPS needed
+  - 🌐 **proxy endpoints** — thumbnail and file download go through edge functions, no CORS issues
 
   ---
 
@@ -52,38 +60,36 @@
 
   | layer | what |
   |---|---|
-  | backend | Go 1.21 — stdlib only |
-  | frontend | Next.js 15 + React |
+  | backend | Next.js API routes — Vercel Edge Runtime |
+  | frontend | Next.js 16 + React 19 |
   | 3D | React Three Fiber / Three.js |
   | animation | Framer Motion |
   | realtime | SSE (EventSource) |
   | styles | Tailwind CSS v4 |
+  | deploy | Vercel |
 
   ---
 
   ## API
 
   ```
-  POST /api/start         { "url": "..." }   →  { "id": "..." }
-  GET  /api/progress?id=  SSE stream — JSON every 160ms (percent, speed, status, filename)
-  GET  /api/file?id=      serves the downloaded file
-  GET  /api/file-by-name?name=   re-download by filename (archive)
-  GET  /api/thumb?id=     proxied thumbnail — no CORS issues
+  GET  /api/capture?url=       SSE stream — extracts media (percent, status, cdnUrl, thumbnailUrl, filename)
+  GET  /api/proxy?url=&name=   streams the file from Instagram CDN through Vercel edge
+  GET  /api/thumb?url=         proxied thumbnail — no browser CORS issues
   ```
 
   ---
 
-  ## VPS deploy
+  ## Environment deploy
 
   ```bash
-  go build -o reelcine ./main.go
-  cd frontend && npm install && npm run build && cd ..
-  nohup ./reelcine > reelcine.log 2>&1 &
+  # deploy to Vercel
+  npm i -g vercel
+  cd frontend
+  vercel --prod
   ```
 
-  ## Vercel (frontend only)
-
-  set env var `NEXT_PUBLIC_API_BASE=http://your-vps-ip:7777` and deploy the `frontend/` folder.
+  no environment variables needed — extraction runs entirely on the edge.
 
   ---
 
