@@ -7,6 +7,8 @@
   import { toast } from 'sonner';
   import * as THREE from 'three';
 
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? "";
+
   interface ProgressData {
     id?: string;
     percent: number;
@@ -174,12 +176,12 @@
 
     const downloadFile = () => {
       if (!cdnUrl || !progress?.filename) return;
-      window.location.href = `/api/proxy?url=${encodeURIComponent(cdnUrl)}&name=${encodeURIComponent(progress.filename)}`;
+      window.location.href = `${API_BASE}/api/proxy?url=${encodeURIComponent(cdnUrl)}&name=${encodeURIComponent(progress.filename)}`;
     };
 
     const redownloadArchive = (item: ArchiveItem) => {
       if (!item.cdnUrl) { toast.error('CDN link expired — re-capture the original URL'); return; }
-      window.location.href = `/api/proxy?url=${encodeURIComponent(item.cdnUrl)}&name=${encodeURIComponent(item.filename)}`;
+      window.location.href = `${API_BASE}/api/proxy?url=${encodeURIComponent(item.cdnUrl)}&name=${encodeURIComponent(item.filename)}`;
     };
 
     useEffect(() => { return () => closeSSE(); }, []);
